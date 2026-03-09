@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:vanillacontacts_course/features/home/bloc/home_bloc.dart';
 import 'package:vanillacontacts_course/features/home/models/home_product_data_model.dart';
+import 'package:vanillacontacts_course/features/wishlist/bloc/wishlist_bloc.dart';
 
-class ProductTileWidget extends StatelessWidget {
+class WishlistTileWidget extends StatelessWidget {
   final ProductDataModel productDataModel;
-  final HomeBloc homeBloc;
-  const ProductTileWidget(
-      {super.key, required this.productDataModel, required this.homeBloc});
+  final WishlistBloc wishlistBloc;
+  const WishlistTileWidget(
+      {super.key, required this.productDataModel, required this.wishlistBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ProductTileWidget extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             border: Border.all(color: Colors.black)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,16 +63,16 @@ class ProductTileWidget extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        homeBloc.add(HomeProductWishListButtonClickedEvent(
-                            clickedProduct: productDataModel));
+                        // cartBloc.add(HomeProductWishListButtonClickedEvent(
+                        //     clickedProduct: productDataModel));
                       },
                       icon: const Icon(Icons.favorite_outline),
                     ),
                     IconButton(
                       onPressed: () {
-                        homeBloc.add(HomeProductCartButtonClickedEvent(
-                          clickedProduct: productDataModel,
-                        ));
+                        // cartBloc.add(HomeProductCartButtonClickedEvent(
+                        //   clickedProduct: productDataModel,
+                        // ));
                       },
                       icon: const Icon(Icons.shopping_bag_outlined),
                     ),

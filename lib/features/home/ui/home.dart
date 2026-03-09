@@ -35,6 +35,16 @@ class _HomeState extends State<Home> {
         } else if (state is HomeNavigateToWishlistPageActionState) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const Wishlist()));
+        } else if (state is HomeProductItemCartedActionState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Item Carted')),
+          );
+        } else if (state is HomeProductItemWishlistedActionState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Item Wishlisted'),
+            ),
+          );
         }
       },
       builder: (context, state) {
@@ -54,37 +64,40 @@ class _HomeState extends State<Home> {
           case HomeLoadedSuccessState _:
             final successState = state as HomeLoadedSuccessState;
             return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.teal,
-                  centerTitle: true,
-                  title: const Text(
-                    'Grocery App',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  actions: [
-                    IconButton(
-                      onPressed: () {
-                        homeBloc.add(
-                          HomeWishListButtonNavigateEvent(),
-                        );
-                      },
-                      icon: const Icon(Icons.favorite_outline),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        homeBloc.add(HomeProductCartButtonClickedEvent());
-                      },
-                      icon: const Icon(Icons.shopping_bag_outlined),
-                    ),
-                  ],
+              appBar: AppBar(
+                backgroundColor: Colors.teal,
+                centerTitle: true,
+                title: const Text(
+                  'Grocery App',
+                  style: TextStyle(color: Colors.white),
                 ),
-                body: ListView.builder(
-                    itemCount: successState.products.length,
-                    itemBuilder: (context, index) {
-                      return ProductTileWidget(
-                        productDataModel: successState.products[index],
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      homeBloc.add(
+                        HomeWishListButtonNavigateEvent(),
                       );
-                    }));
+                    },
+                    icon: const Icon(Icons.favorite_outline),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      homeBloc.add(HomeCartButtonNavigateEvent());
+                    },
+                    icon: const Icon(Icons.shopping_bag_outlined),
+                  ),
+                ],
+              ),
+              body: ListView.builder(
+                itemCount: successState.products.length,
+                itemBuilder: (context, index) {
+                  return ProductTileWidget(
+                    homeBloc: homeBloc,
+                    productDataModel: successState.products[index],
+                  );
+                },
+              ),
+            );
 
           case HomeErrorState _:
             return Scaffold(
